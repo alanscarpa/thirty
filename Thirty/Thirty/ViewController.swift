@@ -19,6 +19,18 @@ class ViewController: UIViewController, QBRTCClientDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Quickblox settings
+        [QBSettings setApplicationID:kQMApplicationID];
+        QBSettings.setApplicationID(<#T##applicationID: UInt##UInt#>)
+        [QBSettings setAuthKey:kQMAuthorizationKey];
+        [QBSettings setAuthSecret:kQMAuthorizationSecret];
+        [QBSettings setAccountKey:kQMAccountKey];
+        [QBSettings setApplicationGroupIdentifier:kQMAppGroupIdentifier];
+        
+        [QBSettings setAutoReconnectEnabled:YES];
+        [QBSettings setCarbonsEnabled:YES];
+        
         startQuickBloxSession()
         
         QBRTCClient.instance().add(self)
