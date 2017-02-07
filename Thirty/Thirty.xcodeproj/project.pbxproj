@@ -101,6 +101,7 @@
 				4500C6FC1E4967A200AF54AA /* Resources */,
 				142126C6F9E6968B57B2BDF2 /* [CP] Embed Pods Frameworks */,
 				23C223A865E774EAB3BA3EB0 /* [CP] Copy Pods Resources */,
+				4500C7131E496BD000AF54AA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -189,6 +190,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Thirty/Pods-Thirty-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		4500C7131E496BD000AF54AA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickbloxWebRTC.framework/strip-framework.sh\"\n";
 		};
 		83EBC128DF4AAEFA2A397B71 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -377,6 +391,7 @@
 				4500C7121E4967A200AF54AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
