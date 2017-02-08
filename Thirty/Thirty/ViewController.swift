@@ -16,14 +16,16 @@ class ViewController: UIViewController, QBRTCClientDelegate {
 
     var session: QBRTCSession?
     @IBOutlet weak var opponentVideoView: QBRTCRemoteVideoView!
+    @IBOutlet weak var localVideoView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // alan = 23716786
-        // sean = 23754827
+        // alan
+        // let user = createUserWithEmail("alan.scarpa+thirty@gmail.com", id: 23716786, password: "alan1234")
         
-        let user = createUserWithEmail("alan.scarpa+thirty@gmail.com", id: 23716786, password: "alan1234")
+        // sean
+        let user = createUserWithEmail("seaneats@gmail.com", id: 23754827, password: "seaneats")
         
         QBChat.instance().connect(with: user) { [weak self] error in
             if error != nil {
@@ -32,7 +34,7 @@ class ViewController: UIViewController, QBRTCClientDelegate {
                 print("logged in!")
                 guard let strongSelf = self else { return }
                 strongSelf.startQuickBloxSession()
-                strongSelf.callUserWithID(23754827)
+                // strongSelf.callUserWithID(23754827)
             }
         }
         
@@ -91,6 +93,22 @@ class ViewController: UIViewController, QBRTCClientDelegate {
     
     func session(_ session: QBRTCSession, acceptedByUser userID: NSNumber, userInfo: [String : String]? = nil) {
         print("call accepted")
+    }
+    
+    func session(_ session: QBRTCSession, connectedToUser userID: NSNumber) {
+        print("connected")
+    }
+    
+    func session(_ session: QBRTCSession, disconnectedFromUser userID: NSNumber) {
+        print("disconnected")
+    }
+    
+    func session(_ session: QBRTCSession, connectionFailedForUser userID: NSNumber) {
+        print("connection failed")
+    }
+    
+    func session(_ session: QBRTCSession, userDidNotRespond userID: NSNumber) {
+        print("user did not respond before timeout")
     }
     
     // MARK: Helpers
