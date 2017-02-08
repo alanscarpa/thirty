@@ -24,7 +24,7 @@ class ViewController: UIViewController, QBRTCClientDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let alan = true
+        let alan = false
         
         usernameLabel.text = alan ? "Alan" : "Sean"
         let userEmail = alan ? "alan.scarpa+thirty@gmail.com" : "seaneats@gmail.com"
@@ -82,6 +82,8 @@ class ViewController: UIViewController, QBRTCClientDelegate {
         // QBRTCCameraCapture class used to capture frames using AVFoundation APIs
         self.videoCapture = QBRTCCameraCapture.init(videoFormat: videoFormat, position: AVCaptureDevicePosition.front)
         
+        
+        self.session?.localMediaStream.videoTrack.isEnabled = true
         // add video capture to session's local media stream
         // from version 2.3 you no longer need to wait for 'initializedLocalMediaStream:' delegate to do it
         self.session?.localMediaStream.videoTrack.videoCapture = self.videoCapture
@@ -137,6 +139,8 @@ class ViewController: UIViewController, QBRTCClientDelegate {
     
     func session(_ session: QBRTCSession, acceptedByUser userID: NSNumber, userInfo: [String : String]? = nil) {
         print("call accepted")
+        
+        
     }
     
     func session(_ session: QBRTCSession, connectedToUser userID: NSNumber) {
