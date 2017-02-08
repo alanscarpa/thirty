@@ -33,6 +33,12 @@
                                     <constraint firstAttribute="height" constant="149" id="RNL-Id-TZI"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcf-pJ-jTW">
+                                <rect key="frame" x="62.5" y="461" width="41" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.022945646196603775" green="0.9779776930809021" blue="0.040814585983753204" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -42,11 +48,14 @@
                             <constraint firstItem="dWP-8q-wnl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="24" id="KDK-qI-bCb"/>
                             <constraint firstItem="Cn4-vK-iec" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="eRi-sE-8L8"/>
                             <constraint firstItem="Cn4-vK-iec" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ehe-3S-6HO"/>
+                            <constraint firstItem="dWP-8q-wnl" firstAttribute="top" secondItem="lcf-pJ-jTW" secondAttribute="bottom" constant="12" id="nnN-ZA-got"/>
+                            <constraint firstItem="lcf-pJ-jTW" firstAttribute="centerX" secondItem="dWP-8q-wnl" secondAttribute="centerX" id="r4I-cZ-Dgn"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="localVideoView" destination="dWP-8q-wnl" id="06N-XG-3bu"/>
                         <outlet property="opponentVideoView" destination="Cn4-vK-iec" id="bm3-X9-xKd"/>
+                        <outlet property="usernameLabel" destination="lcf-pJ-jTW" id="yxj-SP-adJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

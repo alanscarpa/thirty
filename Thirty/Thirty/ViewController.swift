@@ -19,31 +19,47 @@ class ViewController: UIViewController, QBRTCClientDelegate {
     
     @IBOutlet weak var opponentVideoView: QBRTCRemoteVideoView!
     @IBOutlet weak var localVideoView: UIView!
+    @IBOutlet weak var usernameLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // alan
-        //let user = createUserWithEmail("alan.scarpa+thirty@gmail.com", id: 23716786, password: "alan1234")
+        let alan = false
         
-        // sean
-        let user = createUserWithEmail("seaneats@gmail.com", id: 23754827, password: "seaneats")
+        usernameLabel.text = alan ? "Alan" : "Sean"
+        let userEmail = alan ? "alan.scarpa+thirty@gmail.com" : "seaneats@gmail.com"
+        let userPassword = alan ? "alan1234" : "seaneats"
+        let userID: NSNumber = alan ? 23716786 : 23754827
         
-        QBChat.instance().connect(with: user) { [weak self] error in
-            if error != nil {
-                print(error!)
-            } else {
-                print("logged in!")
-                guard let strongSelf = self else { return }
-                strongSelf.startQuickBloxSession { complete in
-                    if complete {
-                        self?.callUserWithID(23754827)
-                    } else {
-                        print("unable to start session")
+        QBRequest.logIn(withUserEmail: userEmail, password: userPassword, successBlock: { (response, user) in
+            print(response)
+            guard let user = user else { return }
+            
+            let currentUser = QBUUser()
+            currentUser.id = user.id
+            currentUser.password = userPassword
+            
+            QBChat.instance().connect(with: currentUser) { [weak self] error in
+                if error != nil {
+                    print(error!)
+                } else {
+                    print("logged in!")
+                    guard let strongSelf = self else { return }
+                    strongSelf.startQuickBloxSession { complete in
+                        if complete {
+                            if alan {
+                                self?.callUserWithID(23754827)
+                            }
+                        } else {
+                            print("unable to start session")
+                        }
                     }
                 }
             }
+        }) { (error) in
+            print(error)
         }
+        
         
     }
     
