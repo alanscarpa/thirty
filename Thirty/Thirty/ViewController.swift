@@ -15,6 +15,8 @@ import MobileCoreServices
 class ViewController: UIViewController, QBRTCClientDelegate {
 
     var session: QBRTCSession?
+    var videoCapture: QBRTCCameraCapture?
+    
     @IBOutlet weak var opponentVideoView: QBRTCRemoteVideoView!
     @IBOutlet weak var localVideoView: UIView!
     
@@ -22,10 +24,10 @@ class ViewController: UIViewController, QBRTCClientDelegate {
         super.viewDidLoad()
         
         // alan
-        // let user = createUserWithEmail("alan.scarpa+thirty@gmail.com", id: 23716786, password: "alan1234")
+        let user = createUserWithEmail("alan.scarpa+thirty@gmail.com", id: 23716786, password: "alan1234")
         
         // sean
-        let user = createUserWithEmail("seaneats@gmail.com", id: 23754827, password: "seaneats")
+        //let user = createUserWithEmail("seaneats@gmail.com", id: 23754827, password: "seaneats")
         
         QBChat.instance().connect(with: user) { [weak self] error in
             if error != nil {
@@ -34,7 +36,6 @@ class ViewController: UIViewController, QBRTCClientDelegate {
                 print("logged in!")
                 guard let strongSelf = self else { return }
                 strongSelf.startQuickBloxSession()
-                // strongSelf.callUserWithID(23754827)
             }
         }
         
@@ -53,6 +54,27 @@ class ViewController: UIViewController, QBRTCClientDelegate {
         // You should call this method before any interact with QuickbloxWebRTC
         QBRTCClient.initializeRTC()
         QBRTCClient.instance().add(self)
+        
+        let videoFormat = QBRTCVideoFormat.init()
+        videoFormat.frameRate = 30
+        videoFormat.pixelFormat = QBRTCPixelFormat.format420f
+        videoFormat.width = 640
+        videoFormat.height = 480
+        // QBRTCCameraCapture class used to capture frames using AVFoundation APIs
+        self.videoCapture = QBRTCCameraCapture.init(videoFormat: videoFormat, position: AVCaptureDevicePosition.front)
+        
+        // add video capture to session's local media stream
+        // from version 2.3 you no longer need to wait for 'initializedLocalMediaStream:' delegate to do it
+        self.session?.localMediaStream.videoTrack.videoCapture = self.videoCapture
+        
+        self.videoCapture?.previewLayer.frame = self.localVideoView.bounds
+        self.videoCapture?.startSession({ [weak self] in
+            guard let strongSelf = self else { return }
+            guard let previewLayer = strongSelf.videoCapture?.previewLayer else { return }
+            strongSelf.localVideoView.layer.insertSublayer(previewLayer, at: 0)
+            // start call
+            strongSelf.callUserWithID(23754827)
+        })
     }
     
     func callUserWithID(_ id: NSNumber) {
