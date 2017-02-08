@@ -24,10 +24,10 @@ class ViewController: UIViewController, QBRTCClientDelegate {
         super.viewDidLoad()
         
         // alan
-        let user = createUserWithEmail("alan.scarpa+thirty@gmail.com", id: 23716786, password: "alan1234")
+        //let user = createUserWithEmail("alan.scarpa+thirty@gmail.com", id: 23716786, password: "alan1234")
         
         // sean
-        //let user = createUserWithEmail("seaneats@gmail.com", id: 23754827, password: "seaneats")
+        let user = createUserWithEmail("seaneats@gmail.com", id: 23754827, password: "seaneats")
         
         QBChat.instance().connect(with: user) { [weak self] error in
             if error != nil {
@@ -35,7 +35,13 @@ class ViewController: UIViewController, QBRTCClientDelegate {
             } else {
                 print("logged in!")
                 guard let strongSelf = self else { return }
-                strongSelf.startQuickBloxSession()
+                strongSelf.startQuickBloxSession { complete in
+                    if complete {
+                        self?.callUserWithID(23754827)
+                    } else {
+                        print("unable to start session")
+                    }
+                }
             }
         }
         
@@ -49,12 +55,20 @@ class ViewController: UIViewController, QBRTCClientDelegate {
         return user
     }
 
-    func startQuickBloxSession() {
+    func startQuickBloxSession(completion: @escaping (Bool) -> Void) {
         // Initialize QuickbloxWebRTC and configure signaling
         // You should call this method before any interact with QuickbloxWebRTC
         QBRTCClient.initializeRTC()
         QBRTCClient.instance().add(self)
         
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            startLocalVideo { complete in
+                completion(complete)
+            }
+        }
+    }
+    
+    func startLocalVideo(completion: @escaping (Bool) -> Void) {
         let videoFormat = QBRTCVideoFormat.init()
         videoFormat.frameRate = 30
         videoFormat.pixelFormat = QBRTCPixelFormat.format420f
@@ -72,8 +86,7 @@ class ViewController: UIViewController, QBRTCClientDelegate {
             guard let strongSelf = self else { return }
             guard let previewLayer = strongSelf.videoCapture?.previewLayer else { return }
             strongSelf.localVideoView.layer.insertSublayer(previewLayer, at: 0)
-            // start call
-            strongSelf.callUserWithID(23754827)
+            completion(true)
         })
     }
     
