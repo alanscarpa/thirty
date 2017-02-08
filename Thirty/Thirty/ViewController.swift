@@ -58,15 +58,6 @@ class ViewController: UIViewController, QBRTCClientDelegate {
         }) { (error) in
             print(error)
         }
-        
-        
-    }
-    
-    func createUserWithID(_ id: UInt, password: String) -> QBUUser {
-        let user = QBUUser()
-        user.id = id
-        user.password = password
-        return user
     }
 
     func startQuickBloxSession(completion: @escaping (Bool) -> Void) {
@@ -134,9 +125,13 @@ class ViewController: UIViewController, QBRTCClientDelegate {
     
     //Called in case when receive remote video track from opponent
     func session(_ session: QBRTCSession, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack, fromUser userID: NSNumber) {
+        guard session == self.session else { return }
         // we suppose you have created UIView and set it's class to QBRTCRemoteVideoView class
         // also we suggest you to set view mode to UIViewContentModeScaleAspectFit or
         // UIViewContentModeScaleAspectFill
+        
+        // TODO: use later maybe let videoTrack = QBRTCSession.remoteVideoTrack(session)
+        
         opponentVideoView.setVideoTrack(videoTrack)
     }
     
@@ -160,7 +155,22 @@ class ViewController: UIViewController, QBRTCClientDelegate {
         print("user did not respond before timeout")
     }
     
+    func session(_ session: QBRTCSession, didChange state: QBRTCConnectionState, forUser userID: NSNumber) {
+        print(state.rawValue)
+    }
+    
+    func sessionDidClose(_ session: QBRTCSession) {
+        print("closed session")
+    }
+    
     // MARK: Helpers
+    
+    func createUserWithID(_ id: UInt, password: String) -> QBUUser {
+        let user = QBUUser()
+        user.id = id
+        user.password = password
+        return user
+    }
     
     func acceptCall(_ userInfo: [String:String]?) {
         // userInfo - the custom user information dictionary for the accept call. May be nil.
