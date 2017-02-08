@@ -20,33 +20,45 @@ class ViewController: UIViewController, QBRTCClientDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Quickblox settings
-        [QBSettings setApplicationID:kQMApplicationID];
-        QBSettings.setApplicationID(<#T##applicationID: UInt##UInt#>)
-        [QBSettings setAuthKey:kQMAuthorizationKey];
-        [QBSettings setAuthSecret:kQMAuthorizationSecret];
-        [QBSettings setAccountKey:kQMAccountKey];
-        [QBSettings setApplicationGroupIdentifier:kQMAppGroupIdentifier];
+        // alan = 23716786
+        // sean = 23754827
         
-        [QBSettings setAutoReconnectEnabled:YES];
-        [QBSettings setCarbonsEnabled:YES];
+        let user = createUserWithEmail("alan.scarpa+thirty@gmail.com", id: 23716786, password: "alan1234")
         
-        startQuickBloxSession()
+        QBChat.instance().connect(with: user) { [weak self] error in
+            if error != nil {
+                print(error!)
+            } else {
+                print("logged in!")
+                guard let strongSelf = self else { return }
+                strongSelf.startQuickBloxSession()
+                strongSelf.callUserWithID(23754827)
+            }
+        }
         
-        QBRTCClient.instance().add(self)
-        
-        // 2123, 2123, 3122 - opponent's
-        let opponentsIDs: [NSNumber] = [3245, 2123, 3122]
-        let newSession = QBRTCClient.instance().createNewSession(withOpponents: opponentsIDs, with: QBRTCConferenceType.video)
-        // userInfo - the custom user information dictionary for the call. May be nil.
-        let userInfo :[String:String] = ["key":"value"]
-        newSession.startCall(userInfo)
+    }
+    
+    func createUserWithEmail(_ email: String, id: UInt, password: String) -> QBUUser {
+        let user = QBUUser()
+        user.email = email
+        user.id = id
+        user.password = password
+        return user
     }
 
     func startQuickBloxSession() {
         // Initialize QuickbloxWebRTC and configure signaling
         // You should call this method before any interact with QuickbloxWebRTC
         QBRTCClient.initializeRTC()
+        QBRTCClient.instance().add(self)
+    }
+    
+    func callUserWithID(_ id: NSNumber) {
+        let opponentsIDs: [NSNumber] = [id]
+        let newSession = QBRTCClient.instance().createNewSession(withOpponents: opponentsIDs, with: QBRTCConferenceType.video)
+        // userInfo - the custom user information dictionary for the call. May be nil.
+        let userInfo :[String:String] = ["key":"value"]
+        newSession.startCall(userInfo)
     }
     
     func endQuickBloxSession() {

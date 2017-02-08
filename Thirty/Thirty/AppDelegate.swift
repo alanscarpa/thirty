@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Quickblox
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Quickblox settings
+        QBSettings.setApplicationID(ApplicationID)
+        QBSettings.setAuthKey(AuthKey)
+        QBSettings.setAuthSecret(AuthSecret)
+        QBSettings.setAccountKey(AccountKey)
+        
+        // TODO: Don't know if this is needed
+        // [QBSettings setApplicationGroupIdentifier:kQMAppGroupIdentifier];
+        
+        // TODO: Will this interfere with hanging up after 30 secs?
+        QBSettings.setAutoReconnectEnabled(true)
+        
+        // TODO: Not sure what this is but it was in sample app
+        QBSettings.setCarbonsEnabled(true)
+        
         return true
     }
 

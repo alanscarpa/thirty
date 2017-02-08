@@ -13,6 +13,7 @@
 		4500C7071E4967A200AF54AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4500C7051E4967A200AF54AA /* Main.storyboard */; };
 		4500C7091E4967A200AF54AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4500C7081E4967A200AF54AA /* Assets.xcassets */; };
 		4500C70C1E4967A200AF54AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4500C70A1E4967A200AF54AA /* LaunchScreen.storyboard */; };
+		4500C7151E4A88FB00AF54AA /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4500C7141E4A88FB00AF54AA /* Keys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		4500C7081E4967A200AF54AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4500C70B1E4967A200AF54AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4500C70D1E4967A200AF54AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4500C7141E4A88FB00AF54AA /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		8670EFF238316E6C9C93FA5B /* Pods-Thirty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thirty.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Thirty/Pods-Thirty.debug.xcconfig"; sourceTree = "<group>"; };
 		A7495EEBDAB071E9D91C54FF /* Pods-Thirty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thirty.release.xcconfig"; path = "Pods/Target Support Files/Pods-Thirty/Pods-Thirty.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +69,7 @@
 				4500C7081E4967A200AF54AA /* Assets.xcassets */,
 				4500C70A1E4967A200AF54AA /* LaunchScreen.storyboard */,
 				4500C70D1E4967A200AF54AA /* Info.plist */,
+				4500C7141E4A88FB00AF54AA /* Keys.swift */,
 			);
 			path = Thirty;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4500C7041E4967A200AF54AA /* ViewController.swift in Sources */,
+				4500C7151E4A88FB00AF54AA /* Keys.swift in Sources */,
 				4500C7021E4967A200AF54AA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
