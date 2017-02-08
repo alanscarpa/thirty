@@ -24,20 +24,19 @@ class ViewController: UIViewController, QBRTCClientDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let alan = false
+        let alan = true
         
         usernameLabel.text = alan ? "Alan" : "Sean"
         let userEmail = alan ? "alan.scarpa+thirty@gmail.com" : "seaneats@gmail.com"
         let userPassword = alan ? "alan1234" : "seaneats"
-        let userID: NSNumber = alan ? 23716786 : 23754827
+        // let userID: NSNumber = alan ? 23716786 : 23754827
         
-        QBRequest.logIn(withUserEmail: userEmail, password: userPassword, successBlock: { (response, user) in
+        QBRequest.logIn(withUserEmail: userEmail, password: userPassword, successBlock: { [weak self] (response, user) in
             print(response)
+            guard let strongSelf = self else { return }
             guard let user = user else { return }
             
-            let currentUser = QBUUser()
-            currentUser.id = user.id
-            currentUser.password = userPassword
+            let currentUser = strongSelf.createUserWithID(user.id, password: userPassword)
             
             QBChat.instance().connect(with: currentUser) { [weak self] error in
                 if error != nil {
@@ -63,9 +62,8 @@ class ViewController: UIViewController, QBRTCClientDelegate {
         
     }
     
-    func createUserWithEmail(_ email: String, id: UInt, password: String) -> QBUUser {
+    func createUserWithID(_ id: UInt, password: String) -> QBUUser {
         let user = QBUUser()
-        user.email = email
         user.id = id
         user.password = password
         return user
